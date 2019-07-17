@@ -10,13 +10,16 @@ type PerceptronTrainer struct {
 }
 
 // BackPropagation train Network input Dataset for 'times' times.
-func (t *PerceptronTrainer) BackPropagation(times int) {
+func (t *PerceptronTrainer) BackPropagation(times int) error {
 	var neuronDelta float64
 
 	for iteration := 0; iteration < times; iteration++ {
 		for _, frame := range t.Dataset {
 			expected := frame[1]
-			results := t.Network.Calculate(frame[0])
+			results, err := t.Network.Calculate(frame[0])
+			if err != nil {
+				return err
+			}
 
 			layerDelta := 0.0
 			for l := len(t.Network.layers) - 1; l > 0; l-- {
@@ -35,4 +38,5 @@ func (t *PerceptronTrainer) BackPropagation(times int) {
 			}
 		}
 	}
+	return nil
 }

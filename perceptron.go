@@ -1,6 +1,7 @@
 package varis
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 )
@@ -13,9 +14,9 @@ type Perceptron struct {
 }
 
 // Calculate run Network calculations by broadcasting signals to input channels and wait signals from output array of chan.
-func (n *Perceptron) Calculate(input Vector) Vector {
+func (n *Perceptron) Calculate(input Vector) (Vector, error) {
 	if len(input) != len(n.layers[0]) {
-		panic("Check count of input value")
+		return nil, errors.New("Check count of input value" + string(len(input)) + " " + string(len(n.layers[0])))
 	}
 
 	input.broadcast(n.input)
@@ -25,7 +26,7 @@ func (n *Perceptron) Calculate(input Vector) Vector {
 		fmt.Printf("Input: %v Output: %v\n", input, output)
 	}
 
-	return output
+	return output, nil
 }
 
 // RunNeurons create goroutines for all Neuron in Perceptron.
