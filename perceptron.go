@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 // Perceptron implement Neural Network Perceptron by collect layers with Neurons and input/output channels.
@@ -16,7 +17,7 @@ type Perceptron struct {
 // Calculate run Network calculations by broadcasting signals to input channels and wait signals from output array of chan.
 func (n *Perceptron) Calculate(input Vector) (Vector, error) {
 	if len(input) != len(n.layers[0]) {
-		return nil, errors.New("Check count of input value" + string(len(input)) + " " + string(len(n.layers[0])))
+		return nil, errors.New("Check count of input value input: " + strconv.Itoa(len(input)) + ", layer: " + strconv.Itoa(len(n.layers[0])))
 	}
 
 	input.broadcast(n.input)
