@@ -1,5 +1,9 @@
 package varis
 
+import (
+	"fmt"
+)
+
 // Dataset - simple type for store input and expected Vectors.
 type Dataset [][2]Vector
 
@@ -14,6 +18,9 @@ func (t *PerceptronTrainer) BackPropagation(times int) error {
 	var neuronDelta float64
 
 	for iteration := 0; iteration < times; iteration++ {
+
+		fmt.Println("Varis propogation iteraion ", iteration, " from ", times)
+
 		for _, frame := range t.Dataset {
 			expected := frame[1]
 			results, err := t.Network.Calculate(frame[0])
